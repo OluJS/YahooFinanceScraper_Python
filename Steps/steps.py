@@ -1,84 +1,50 @@
-from behave import *
 from selenium import webdriver
+from Resources.listOfStocks import stocksToSearch
 from Pages.cookieAgreementPage import cookieAgreementPage
 from Pages.homePage import homePage
 from Pages.statsPage import statsPage
 from Pages.stockPage import stockPage
 import time
 
-PATH = "C:\\webdrivers\\chromedriver.exe"
+PATH = "/Users/olu/PycharmProjects/YahooFinanceScraper/Driver/chromedriver"
+webUrl = "https://finance.yahoo.com/"
 driver = webdriver.Chrome(executable_path=PATH)
 
 
-@given('I go to Yahoo Finance "{webUrl}"')
-def step_impl(context, webUrl):
-    driver.get(webUrl)
+def open_browser():
     driver.maximize_window()
-    pass
-
-
-@when('I search for a stock {stockName}')
-def step_impl(context, stockName):
+    driver.get(webUrl)
+    time.sleep(2)
     cookie = cookieAgreementPage(driver)
     cookie.clickAgree()
-    home = homePage(driver)
-    home.typeTickerSymbol(stockName)
-    time.sleep(2)
-    home.clickSearch()
-    pass
+    get_stock()
 
 
-@when('I go to the statistics tab')
-def step_impl(context):
-    time.sleep(2)
-    stock = stockPage(driver)
-    stock.clickStats()
-    pass
+def get_stock():
+    for stock in stocksToSearch:
+        time.sleep(2)
+
+        home = homePage(driver)
+        home.typeTickerSymbol(stock)
+        time.sleep(1)
+        home.clickSearch()
+
+        time.sleep(2)
+
+        stock = stockPage(driver)
+        stock.clickStats()
+
+        time.sleep(2)
+
+        stats = statsPage(driver)
+        stats.getValuationMeasures()
+
+    print("\nStats have been collected")
+    close_browser()
 
 
-@then('I get the enterprise value')
-def step_impl(context):
-    stats = statsPage(driver)
-    time.sleep(3)
-    stats.getValuationMeasures()
-    pass
-
-
-@then('I close the browser')
-def step_impl(context):
+def close_browser():
     driver.quit()
-    pass
 
 
-'''
-driver = webdriver.Chrome(executable_path=PATH)
-driver.implicitly_wait(10)
-driver.maximize_window()
-driver.get(webUrl)
-
-time.sleep(2)
-
-cookie = cookieAgreementPage(driver)
-cookie.clickAgree()
-
-time.sleep(2)
-
-home = homePage(driver)
-home.typeTickerSymbol("MSFT")
-time.sleep(1)
-home.clickSearch()
-
-time.sleep(2)
-
-stock = stockPage(driver)
-stock.clickStats()
-
-time.sleep(2)
-
-stats = statsPage(driver)
-stats.getValuationMeasures()
-
-driver.close()
-driver.quit()
-print("\nStats col
-'''
+open_browser()
