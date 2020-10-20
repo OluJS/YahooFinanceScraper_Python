@@ -1,15 +1,16 @@
-class locators():
+class locators:
     # cookieAgreementPage
     agree_button_xpath = "//button[@name='agree']"
 
     # homePage
     tickerSymbol_textbox_xpath = "//input[@id='yfin-usr-qry']"
-    searches_button_xpath = "//button[@id='search-button']"
+    searches_button_xpath = "//button[@id='header-desktop-search-button']"
 
     # statsPage
-    forwardPE_text_cssSelector = ".fi-row:nth-child(4) > .Fw\(500\)"
-    marketCap_text_cssSelector = ".fi-row:nth-child(1) > .Fw\(500\)"
-    enterpriseValue_text_cssSelector = ".fi-row:nth-child(2) > .Fw\(500\)"
+    stockName_text_cssSelector = ".Fz\(18px\)"
+    forwardPE_text_cssSelector = ".Bxz\(bb\):nth-child(4) > .Ta\(c\):nth-child(2)"
+    marketCap_text_cssSelector = ".BdY > .Ta\(c\):nth-child(2)"
+    enterpriseValue_text_cssSelector = ".Bxz\(bb\):nth-child(2) > .Ta\(c\):nth-child(2)"
     totalCash_text_cssSelector = ".Pos\(r\):nth-child(5) .Bxz\(bb\):nth-child(1) > .Fw\(500\)"
     totalDebt_text_cssSelector = ".Pos\(r\):nth-child(5) .Bxz\(bb\):nth-child(3) > .Fw\(500\)"
     dividend_text_cssSelector = ".Pstart\(20px\) > .Pos\(r\):nth-child(3) .Bxz\(bb\):nth-child(2) > .Fw\(500\)"
